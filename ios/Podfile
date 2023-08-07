@@ -7,6 +7,7 @@ target 'Runner' do
 
   # Pods for Runner
   pod 'Flutter'
+  pod 'FaceCaptcha', '5.1.0', :source => 'https://github.com/oititec/liveness-ios-specs'
 
   target 'RunnerTests' do
     inherit! :search_paths

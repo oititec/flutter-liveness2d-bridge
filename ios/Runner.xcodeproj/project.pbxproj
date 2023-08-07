@@ -16,6 +16,9 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		D78E9E782A817BA0001023BF /* AppDelegate+DocumentscopyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78E9E772A817BA0001023BF /* AppDelegate+DocumentscopyDelegate.swift */; };
+		D78E9E7A2A817BC6001023BF /* AppDelegate+FaceCaptchaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78E9E792A817BC6001023BF /* AppDelegate+FaceCaptchaDelegate.swift */; };
+		D78E9E7C2A817C02001023BF /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78E9E7B2A817C02001023BF /* AppDelegate+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D78E9E772A817BA0001023BF /* AppDelegate+DocumentscopyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+DocumentscopyDelegate.swift"; sourceTree = "<group>"; };
+		D78E9E792A817BC6001023BF /* AppDelegate+FaceCaptchaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+FaceCaptchaDelegate.swift"; sourceTree = "<group>"; };
+		D78E9E7B2A817C02001023BF /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		DFC09E954BF040BDDC22005E /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF05E61CD2D808188F4D5364 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +145,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				D78E9E762A817B89001023BF /* Extensions */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -151,6 +158,16 @@
 			path = Runner;
 			sourceTree = "<group>";
 		};
+		D78E9E762A817B89001023BF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D78E9E772A817BA0001023BF /* AppDelegate+DocumentscopyDelegate.swift */,
+				D78E9E792A817BC6001023BF /* AppDelegate+FaceCaptchaDelegate.swift */,
+				D78E9E7B2A817C02001023BF /* AppDelegate+Utils.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E5E859AF7BC6EB0C3B091ED8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +178,6 @@
 				4EC4E93F7C1EEFA1B6EEE13F /* Pods-RunnerTests.release.xcconfig */,
 				204B0C17A5EC763C42C31A89 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -377,7 +393,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				D78E9E7A2A817BC6001023BF /* AppDelegate+FaceCaptchaDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				D78E9E7C2A817C02001023BF /* AppDelegate+Utils.swift in Sources */,
+				D78E9E782A817BA0001023BF /* AppDelegate+DocumentscopyDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

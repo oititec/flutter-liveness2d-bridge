@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oiti_liveness2d_bridge/bridge/call_liveness2d.dart';
+import 'package:oiti_liveness2d_bridge/bridge/facecaptcha_validate_model.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,8 +15,11 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  late TextEditingController _controller;
+  late TextEditingController _appKeyController;
+  late TextEditingController _ticketController;
 
+  bool _usingCertifaceAPI = false;
+  String? ticket;
   var appKey = '';
   var isProd = false;
 
@@ -25,12 +29,14 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _appKeyController = TextEditingController();
+    _ticketController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _appKeyController.dispose();
+    _ticketController.dispose();
     super.dispose();
   }
 
@@ -54,8 +60,10 @@ class _MainAppState extends State<MainApp> {
               child: ElevatedButton(
                 onPressed: () async {
                   try {
-                    await OitiLiveness2D.startFaceCaptcha(appKey, isProd)
-                        .then((result) => _onFaceCaptchaSuccess(result));
+                    await OitiLiveness2D.startFaceCaptcha(
+                      appKey: appKey,
+                      isProd: isProd,
+                    ).then((result) => _onFaceCaptchaSuccess(result));
                   } on PlatformException catch (error) {
                     _onFaceCaptchaError(error);
                   } catch (error) {
@@ -75,10 +83,13 @@ class _MainAppState extends State<MainApp> {
               child: ElevatedButton(
                 onPressed: () async {
                   try {
-                    await OitiLiveness2D.startFaceCaptcha(appKey, isProd)
-                        .then((result) => _onFaceCaptchaSuccess(result));
+                    await OitiLiveness2D.startDocumentscopy(
+                      ticket: ticket,
+                      appKey: appKey,
+                      isProd: isProd,
+                    ).then((_) => _onDocumentscopySuccess());
                   } on PlatformException catch (error) {
-                    _onFaceCaptchaError(error);
+                    _onDocumentscopyError(error);
                   } catch (error) {
                     print(error);
                   }
@@ -105,11 +116,48 @@ class _MainAppState extends State<MainApp> {
               child: Text(resultContent),
             ),
             const Spacer(),
+            sourceSelection(),
+            ticketSection(),
             SafeArea(
               child: appKeySection(),
             ),
           ],
         )),
+      ),
+    );
+  }
+
+  Widget sourceSelection() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, right: 20, bottom: 10),
+      child: Row(children: [
+        const Text("Usar Certiface API"),
+        const Spacer(),
+        Switch(
+          value: _usingCertifaceAPI,
+          onChanged: (value) {
+            setState(() {
+              _usingCertifaceAPI = value;
+              ticket = _usingCertifaceAPI ? '' : null;
+            });
+          },
+        ),
+      ]),
+    );
+  }
+
+  Widget ticketSection() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      child: TextField(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Ticket',
+        ),
+        obscureText: false,
+        controller: _ticketController,
+        onSubmitted: (value) => _pasteTicket(_ticketController),
+        enabled: _usingCertifaceAPI,
       ),
     );
   }
@@ -123,26 +171,48 @@ class _MainAppState extends State<MainApp> {
           labelText: 'App Key',
         ),
         obscureText: false,
-        controller: _controller,
-        onSubmitted: (value) => _pasteAppKey(),
+        controller: _appKeyController,
+        onSubmitted: (value) => _pasteAppKey(_appKeyController),
       ),
     );
   }
 
-  _pasteAppKey() {
-    setState(() => appKey = _controller.text);
-    _controller.text = '';
+  _pasteAppKey(TextEditingController controller) {
+    setState(() => appKey = controller.text);
+    controller.text = '';
   }
 
-  _onFaceCaptchaSuccess(Object result) {}
+  _pasteTicket(TextEditingController controller) {
+    setState(() => ticket = controller.text);
+    controller.text = '';
+  }
 
-  _onFaceCaptchaError(PlatformException error) {}
+  _onFaceCaptchaSuccess(FaceCaptchaValidateModel result) {
+    setState(() {
+      resultStatus = 'FaceCaptcha Success';
+      resultContent =
+          'Valid: ${result.valid}\nCodID: ${result.codId}\nCause: ${result.cause}\nProtocol: ${result.uidProtocol}\n';
+    });
+  }
 
-  _onFaceCaptchaCanceled(PlatformException error) {}
+  _onFaceCaptchaError(PlatformException error) {
+    setState(() {
+      resultStatus = 'FaceCaptcha Error';
+      resultContent = 'Code: ${error.code}\nMessage: ${error.message}\n';
+    });
+  }
 
-  _onDocumentscopyCompleted(Object result) {}
+  _onDocumentscopySuccess() {
+    setState(() {
+      resultStatus = 'Documentscopy Success';
+      resultContent = '';
+    });
+  }
 
-  _onDocumentscopyError(PlatformException error) {}
-
-  _onDocumentscopyCancelled(PlatformException error) {}
+  _onDocumentscopyError(PlatformException error) {
+    setState(() {
+      resultStatus = 'Documentscopy Error';
+      resultContent = 'Code: ${error.code}\nMessage: ${error.message}\n';
+    });
+  }
 }

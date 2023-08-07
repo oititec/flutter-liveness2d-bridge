@@ -16,10 +16,11 @@ class MethodChannelLiveness2D extends OitiLiveness2DPlatform {
   }
 
   @override
-  Future startDocumentscopy(String appKey, bool isProd) async {
+  Future startDocumentscopy(String? ticket, String appKey, bool isProd) async {
     return await methodChannel.invokeMapMethod(
-      'OITI.startFaceCaptcha',
+      'OITI.startDocumentscopy',
       {
+        'ticket': ticket,
         'appkey': appKey,
         'isProd': isProd,
       },

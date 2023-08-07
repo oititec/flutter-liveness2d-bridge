@@ -19,7 +19,7 @@ abstract class OitiLiveness2DPlatform extends PlatformInterface {
     throw UnimplementedError('startFaceCaptcha() has not been implemented.');
   }
 
-  Future startDocumentscopy(String appKey, bool isProd) {
+  Future startDocumentscopy(String? ticket, String appKey, bool isProd) {
     throw UnimplementedError('startDocumentscopy() has not been implemented.');
   }
 }
