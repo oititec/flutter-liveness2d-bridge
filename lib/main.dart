@@ -26,7 +26,7 @@ class _MainAppState extends State<MainApp> {
   var _appKeyLabel = 'AppKey vazia';
   var _ticketLabel = 'Ticket indisponível';
 
-  var resultStatus = 'Jornada liveness não iniciada.';
+  var resultStatus = 'Nenhuma jornada foi iniciada';
   var resultContent = '';
 
   @override
@@ -48,10 +48,11 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Liveness 2D'),
+          title: const Center(
+            child: Text('Liveness 2D'),
+          ),
         ),
-        body: Center(
-            child: Column(
+        body: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -88,7 +89,7 @@ class _MainAppState extends State<MainApp> {
                 left: 20,
                 right: 20,
                 top: 5,
-                bottom: 5,
+                bottom: 15,
               ),
               child: ElevatedButton(
                 onPressed: _buttonsDisabled
@@ -109,39 +110,53 @@ class _MainAppState extends State<MainApp> {
                 child: const Text("Iniciar Documentoscopia"),
               ),
             ),
+            const Divider(
+              height: 2,
+              thickness: 1,
+              color: Colors.grey,
+            ),
             Padding(
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: 20,
+                top: 15,
                 bottom: 5,
               ),
-              child: Text('Status: $resultStatus'),
+              child: Text(
+                'Status: $resultStatus',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
                 top: 5,
-                bottom: 20,
+                bottom: 15,
               ),
               child: Text(resultContent),
             ),
-            const Spacer(),
+            const Divider(
+              height: 2,
+              thickness: 1,
+              color: Colors.grey,
+            ),
             sourceSelection(),
             ticketSection(),
             SafeArea(
               child: appKeySection(),
             ),
           ],
-        )),
+        ),
       ),
     );
   }
 
   Widget sourceSelection() {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 20, bottom: 10),
+      padding: const EdgeInsets.only(left: 30, right: 20, bottom: 10, top: 5),
       child: Row(children: [
         const Text("Usar Certiface API"),
         const Spacer(),
@@ -235,14 +250,14 @@ class _MainAppState extends State<MainApp> {
     setState(() {
       resultStatus = 'FaceCaptcha Success';
       resultContent =
-          'Valid: ${result.valid}\nCodID: ${result.codId}\nCause: ${result.cause}\nProtocol: ${result.uidProtocol}\n';
+          'Valid: ${result.valid}\nCodID: ${result.codId}\nCause: ${result.cause}\nProtocol: ${result.uidProtocol}';
     });
   }
 
   _onFaceCaptchaError(PlatformException error) {
     setState(() {
       resultStatus = 'FaceCaptcha Error';
-      resultContent = 'Code: ${error.code}\nMessage: ${error.message}\n';
+      resultContent = 'Code: ${error.code}\nMessage: ${error.message}';
     });
   }
 
@@ -256,7 +271,7 @@ class _MainAppState extends State<MainApp> {
   _onDocumentscopyError(PlatformException error) {
     setState(() {
       resultStatus = 'Documentscopy Error';
-      resultContent = 'Code: ${error.code}\nMessage: ${error.message}\n';
+      resultContent = 'Code: ${error.code}\nMessage: ${error.message}';
     });
   }
 }
