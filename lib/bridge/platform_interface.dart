@@ -15,7 +15,15 @@ abstract class OitiLiveness2DPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future startFaceCaptcha(String appKey, bool isProd) {
+  Future startFaceCaptcha(
+    String appKey,
+    bool isProd,
+    String user,
+    String name,
+    String cpf,
+    String birthdate,
+    String password,
+  ) {
     throw UnimplementedError('startFaceCaptcha() has not been implemented.');
   }
 

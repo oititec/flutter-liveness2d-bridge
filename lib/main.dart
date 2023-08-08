@@ -68,6 +68,11 @@ class _MainAppState extends State<MainApp> {
                           await OitiLiveness2D.startFaceCaptcha(
                             appKey: appKey,
                             isProd: isProd,
+                            user: "flutter.app",
+                            name: "Flutter App",
+                            cpf: "52998850081",
+                            birthdate: "01/01/2000",
+                            password: "flutter_passwword",
                           ).then((result) => _onFaceCaptchaSuccess(result));
                         } on PlatformException catch (error) {
                           _onFaceCaptchaError(error);
@@ -201,6 +206,10 @@ class _MainAppState extends State<MainApp> {
       _buttonsDisabled = false;
     });
     _appKeyController.clear();
+
+    if (_ticketController.text.isNotEmpty) {
+      _pasteTicket(_ticketController.text);
+    }
   }
 
   _pasteTicket(String ticketValue) {
@@ -216,6 +225,10 @@ class _MainAppState extends State<MainApp> {
       _buttonsDisabled = false;
     });
     _ticketController.clear();
+
+    if (_appKeyController.text.isNotEmpty) {
+      _pasteAppKey(_appKeyController.text);
+    }
   }
 
   _onFaceCaptchaSuccess(FaceCaptchaValidateModel result) {

@@ -5,11 +5,15 @@ class OitiLiveness2D {
   static Future startFaceCaptcha({
     required String appKey,
     required bool isProd,
+    required String user,
+    required String name,
+    required String cpf,
+    required String birthdate,
+    required String password,
   }) async {
-    final result = await OitiLiveness2DPlatform.instance.startFaceCaptcha(
-      appKey,
-      isProd,
-    );
+    final result = await OitiLiveness2DPlatform.instance
+        .startFaceCaptcha(appKey, isProd, user, name, cpf, birthdate, password);
+
     return FaceCaptchaValidateModel(
       valid: result['valid'] ?? false,
       cause: result['cause'] ?? '',
