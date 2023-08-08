@@ -18,10 +18,13 @@ class _MainAppState extends State<MainApp> {
   late TextEditingController _appKeyController;
   late TextEditingController _ticketController;
 
+  bool _buttonsDisabled = false;
   bool _usingCertifaceAPI = false;
   String? ticket;
   var appKey = '';
   var isProd = false;
+  var _appKeyLabel = 'AppKey vazia';
+  var _ticketLabel = 'Ticket indisponível';
 
   var resultStatus = 'Jornada liveness não iniciada.';
   var resultContent = '';
@@ -58,18 +61,20 @@ class _MainAppState extends State<MainApp> {
                 bottom: 5,
               ),
               child: ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await OitiLiveness2D.startFaceCaptcha(
-                      appKey: appKey,
-                      isProd: isProd,
-                    ).then((result) => _onFaceCaptchaSuccess(result));
-                  } on PlatformException catch (error) {
-                    _onFaceCaptchaError(error);
-                  } catch (error) {
-                    print(error);
-                  }
-                },
+                onPressed: _buttonsDisabled
+                    ? null
+                    : () async {
+                        try {
+                          await OitiLiveness2D.startFaceCaptcha(
+                            appKey: appKey,
+                            isProd: isProd,
+                          ).then((result) => _onFaceCaptchaSuccess(result));
+                        } on PlatformException catch (error) {
+                          _onFaceCaptchaError(error);
+                        } catch (error) {
+                          print(error);
+                        }
+                      },
                 child: const Text("Iniciar FaceCaptcha"),
               ),
             ),
@@ -81,19 +86,21 @@ class _MainAppState extends State<MainApp> {
                 bottom: 5,
               ),
               child: ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await OitiLiveness2D.startDocumentscopy(
-                      ticket: ticket,
-                      appKey: appKey,
-                      isProd: isProd,
-                    ).then((_) => _onDocumentscopySuccess());
-                  } on PlatformException catch (error) {
-                    _onDocumentscopyError(error);
-                  } catch (error) {
-                    print(error);
-                  }
-                },
+                onPressed: _buttonsDisabled
+                    ? null
+                    : () async {
+                        try {
+                          await OitiLiveness2D.startDocumentscopy(
+                            ticket: ticket,
+                            appKey: appKey,
+                            isProd: isProd,
+                          ).then((_) => _onDocumentscopySuccess());
+                        } on PlatformException catch (error) {
+                          _onDocumentscopyError(error);
+                        } catch (error) {
+                          print(error);
+                        }
+                      },
                 child: const Text("Iniciar Documentoscopia"),
               ),
             ),
@@ -138,8 +145,10 @@ class _MainAppState extends State<MainApp> {
           onChanged: (value) {
             setState(() {
               _usingCertifaceAPI = value;
-              ticket = _usingCertifaceAPI ? '' : null;
+              ticket = value ? '' : null;
+              _ticketLabel = value ? 'Ticket vazio' : 'Ticket indisponível';
             });
+            _ticketController.text = '';
           },
         ),
       ]),
@@ -150,13 +159,14 @@ class _MainAppState extends State<MainApp> {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       child: TextField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Ticket',
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: _ticketLabel,
         ),
         obscureText: false,
         controller: _ticketController,
-        onSubmitted: (value) => _pasteTicket(_ticketController),
+        onTap: () => setState(() => _buttonsDisabled = true),
+        onSubmitted: (value) => _pasteTicket(value),
         enabled: _usingCertifaceAPI,
       ),
     );
@@ -166,25 +176,46 @@ class _MainAppState extends State<MainApp> {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
       child: TextField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'App Key',
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: _appKeyLabel,
         ),
         obscureText: false,
         controller: _appKeyController,
-        onSubmitted: (value) => _pasteAppKey(_appKeyController),
+        onTap: () => setState(() => _buttonsDisabled = true),
+        onSubmitted: (value) => _pasteAppKey(value),
       ),
     );
   }
 
-  _pasteAppKey(TextEditingController controller) {
-    setState(() => appKey = controller.text);
-    controller.text = '';
+  _pasteAppKey(String appKeyValue) {
+    setState(() {
+      if (appKeyValue.isEmpty) {
+        _appKeyLabel = 'AppKey vazia';
+      } else if (appKeyValue.length > 10) {
+        _appKeyLabel = 'AppKey: ${appKeyValue.substring(0, 10)}...';
+      } else {
+        _appKeyLabel = 'AppKey: $appKeyValue';
+      }
+      appKey = appKeyValue;
+      _buttonsDisabled = false;
+    });
+    _appKeyController.clear();
   }
 
-  _pasteTicket(TextEditingController controller) {
-    setState(() => ticket = controller.text);
-    controller.text = '';
+  _pasteTicket(String ticketValue) {
+    setState(() {
+      if (ticketValue.isEmpty) {
+        _ticketLabel = 'Ticket vazio';
+      } else if (ticketValue.length > 10) {
+        _ticketLabel = 'Ticket: ${ticketValue.substring(0, 10)}...';
+      } else {
+        _ticketLabel = 'Ticket: $ticketValue';
+      }
+      ticket = ticketValue;
+      _buttonsDisabled = false;
+    });
+    _ticketController.clear();
   }
 
   _onFaceCaptchaSuccess(FaceCaptchaValidateModel result) {
