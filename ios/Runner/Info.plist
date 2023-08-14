@@ -48,6 +48,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Ativar camera</string>
+	<string>Acesso a câmera</string>
 </dict>
 </plist>

@@ -1,4 +1,8 @@
-# Oiti - Bridge para o Liveness 2D
+<div style="align:center;">
+ <img src="documentation/images/oiti_header.png"/>
+</div>
+
+# Flutter (Bridge) para Liveness 2D e Doc Core
 
 ## Sobre este Repositório
 
@@ -19,11 +23,11 @@ Para realizar a comunicação entre o código Dart e o código nativo da platafo
 
 ### MethodChannel:
 
-O Flutter fornece duas classes principais para facilitar a comunicação através dos canais de plataforma: MethodChannel e EventChannel. Nesse projeto utilizamos apenas do MethodChannel que permite que você invoque métodos do código nativo a partir do Dart e obtenha callback`s.
+O Flutter fornece duas classes principais para facilitar a comunicação através dos canais de plataforma: MethodChannel e EventChannel. **Nesse projeto utilizamos apenas do MethodChannel que permite que você invoque métodos do código nativo a partir do Dart e obtenha callback`s**.
 
-<p style="align:center;">
- <img src="https://miro.medium.com/v2/0*33bydz0LNvKaJ4kY.png"/>
-</p>
+<div style="align:center;">
+ <img src="documentation/images/bridge_method-channel_diagram.png"/>
+</div>
 
 ## Sumário
 
@@ -36,33 +40,19 @@ As instruções de uso, integração, implementação e customização do **Live
 
 ### Android
 
-- **Geral**
-    - [Configuração Inicial](documentation/android/initial_config.md)
-    - [Configuração do FlutterEngine e MethodChannel](documentation/android/flutter_engine_config.md)
-    - [Configuração dos Responses/Callback](documentation/android/callback.md)
+- [Configuração Inicial](documentation/android/initial_config.md)
+- [Configuração do FlutterEngine e MethodChannel](documentation/android/flutter_engine_config.md)
+- [Configuração dos Responses/Callback](documentation/android/callback.md)
 
-- **Liveness 2D**
-    - [Guia de Uso e Integração](https://github.com/oititec/liveness-android-sdk/blob/main/Documentation/Liveness-Usage.md)
-    - [Guia de Customização](https://github.com/oititec/liveness-android-sdk/blob/main/Documentation/Liveness-CustomView.md)
-
-- **Doc Core**
-    - [Guia de Uso e Integração](https://github.com/oititec/liveness-android-sdk/blob/main/Documentation/Documentscopy-Usage.md)
-    - [Guia de Customização](https://github.com/oititec/liveness-android-sdk/blob/main/Documentation/Documentscopy-CustomView.md)
+Acesse o nosso DevCenter para consultar os guias para Liveness 2D ([Integração](https://devcenter.certiface.io/docs/guia-de-uso-e-integracao-android) e [Customização](https://devcenter.certiface.io/docs/customizacao-telas-de-inicializacao-liveness2d-android)) e Doc Core ([Integração](https://devcenter.certiface.io/docs/guia-de-uso-e-integracao-android) e [Customização](https://devcenter.certiface.io/docs/doc-core-android)). 
 
 ### iOS
 
-- **Geral**
-    - [Configuração Inicial](documentation/ios/initial_config.md)
-    - [Configuração do FlutterEngine e MethodChannel](documentation/ios/flutter_engine_config.md)
-    - [Configuração dos Retornos do SDK](documentation/ios/callback.md)
+- [Configuração Inicial](documentation/ios/initial_config.md)
+- [Configuração do FlutterEngine e MethodChannel](documentation/ios/flutter_engine_config.md)
+- [Configuração dos Responses/Callback](documentation/ios/callback.md)
 
-- **Liveness 2D**
-    - [Guia de Uso e Integração](https://github.com/oititec/liveness-ios-sdk/blob/main/Documentation/Liveness3D/Liveness3D-Usage.md)
-    - [Guia de Customização](https://github.com/oititec/liveness-ios-sdk/blob/main/Documentation/Liveness2D/FaceCaptcha-CustomView.md)
-
-- **Doc Core**
-    - [Guia de Uso e Integração](https://github.com/oititec/liveness-ios-sdk/blob/main/Documentation/Liveness2D/Documentscopy-Usage.md)
-    - [Guia de Customização](https://github.com/oititec/liveness-ios-sdk/blob/main/Documentation/Liveness2D/Documentscopy-CustomView.md)
+Acesse o nosso DevCenter para consultar os guias de Integração e Customização para o [Liveness 2D](https://devcenter.certiface.io/docs/liveness2d-monolito-ios) e [Doc Core](https://devcenter.certiface.io/docs/doc-core-monolito-ios) iOS. 
 
 ### Como executar o clone do Repositório?
 

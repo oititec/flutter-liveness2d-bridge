@@ -38,3 +38,22 @@ Ainda na pasta `ios` Execute o comando de instalação dos Pods.
 ```bash
 pod install
 ```
+
+## Passo 5: Permissão para uso da câmera
+
+Ambos os módulos, Liveness 2D e Doc Core, fazem uso da câmera, por isso é necessário caso explicitar o uso desse recurso no `Info.plist` do projeto.
+
+- [Acessar arquivo de exemplo](../../ios/Runner/Info.plist).
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Acesso a câmera</string>
+```
+
+_Adição pelo Xcode_
+
+Chave: `Privacy - Camera Usage Description`
+
+<div style="align:center;">
+  <img src="../images/ios_camera_permission.png"/>
+</div>
